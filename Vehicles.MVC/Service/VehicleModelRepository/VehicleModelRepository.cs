@@ -18,4 +18,11 @@ public class VehicleModelRepository : IVehicleModelRepository
         var vehicleModels = _context.VehicleModel.Include(v => v.VehicleMake);
         return vehicleModels;
     }
+
+    public async Task<VehicleModel> GetVehicleModelAsync(int? id)
+    {
+        return await _context.VehicleModel
+            .Include(v => v.VehicleMake)
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
 }

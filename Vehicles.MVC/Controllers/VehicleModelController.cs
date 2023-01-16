@@ -94,14 +94,13 @@ namespace Vehicles.MVC.Controllers
         // GET: VehicleModel/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.VehicleModel == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var vehicleModel = await _context.VehicleModel
-                .Include(v => v.VehicleMake)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var vehicleModel = await _vehicleModelRepository.GetVehicleModelAsync(id);
+            
             if (vehicleModel == null)
             {
                 return NotFound();
