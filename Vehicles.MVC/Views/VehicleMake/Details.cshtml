@@ -1,0 +1,55 @@
+@model Vehicles.MVC.Models.VehicleMakeViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>VehicleMake</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Abrv)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Abrv)
+        </dd>
+    </dl>
+    <hr/>
+    
+    
+    @{
+        var modelsTableVisible = Model.VehicleModels.Any();
+    }
+    <table class="table" is-visible="modelsTableVisible">
+        <thead>
+        <tr>
+            <th>
+                Models
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.VehicleModels) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <p is-visible="!modelsTableVisible">This make has no models.</p>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

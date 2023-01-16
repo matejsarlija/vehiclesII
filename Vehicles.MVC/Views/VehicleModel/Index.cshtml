@@ -1,0 +1,77 @@
+@model VehicleModelViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Vehicle Models</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="VehicleModel" asp-action="Index" method="get">
+    <p>
+        <select asp-for="VehicleModelMake" asp-items="Model.VehicleMakes">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model.VehicleModels[0].Name)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AbrvSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model.VehicleModels[0].Abrv)</a> 
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["MakeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">@Html.DisplayNameFor(model => model.VehicleModels[0].VehicleMake)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.VehicleModels) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abrv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleMake.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.VehicleModels.hasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.VehicleModels.hasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.VehicleModels.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary btn-default @prevDisabled">
+    Previous
+</a>
+Page @(Model.VehicleModels.PageIndex) of @Model.VehicleModels.TotalPages
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.VehicleModels.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary btn-default @nextDisabled">
+    Next
+</a>
