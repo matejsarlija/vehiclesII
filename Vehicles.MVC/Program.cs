@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.Data;
 using Vehicles.MVC.Models;
 using Vehicles.MVC.Service;
+using Vehicles.MVC.Service.VehicleModelRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VehicleContext>(options =>
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<VehicleContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAutoMapper(typeof(VehicleMakeProfile));
 builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
+builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

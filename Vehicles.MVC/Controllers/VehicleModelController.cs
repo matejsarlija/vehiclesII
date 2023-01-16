@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.Data;
 using Vehicles.MVC.Models;
 using Vehicles.MVC.Service;
+using Vehicles.MVC.Service.VehicleModelRepository;
 
 namespace Vehicles.MVC.Controllers
 {
@@ -11,12 +12,14 @@ namespace Vehicles.MVC.Controllers
     {
         private readonly VehicleContext _context;
         private readonly IVehicleMakeRepository _vehicleMakeRepository;
+        private readonly IVehicleModelRepository _vehicleModelRepository;
 
 
-        public VehicleModelController(IVehicleMakeRepository vehicleMakeRepository, VehicleContext context)
+        public VehicleModelController(IVehicleModelRepository vehicleModelRepository, IVehicleMakeRepository vehicleMakeRepository, VehicleContext context)
         {
             _context = context;
             _vehicleMakeRepository = vehicleMakeRepository;
+            _vehicleModelRepository = vehicleModelRepository;
         }
 
         // GET: VehicleModel
@@ -41,7 +44,8 @@ namespace Vehicles.MVC.Controllers
             // section for filter by make
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
 
-            var vehicleModels = from v in _context.VehicleModel.Include(v => v.VehicleMake) select v;
+            //var vehicleModels = from v in _context.VehicleModel.Include(v => v.VehicleMake) select v;
+            var vehicleModels = await _vehicleModelRepository.GetVehicleModelsAsync();
 
             if (!string.IsNullOrEmpty(vehicleModelMake))
             {
