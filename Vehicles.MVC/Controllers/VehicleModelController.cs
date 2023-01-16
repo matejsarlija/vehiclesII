@@ -146,12 +146,15 @@ namespace Vehicles.MVC.Controllers
                 return NotFound();
             }
 
-            var vehicleModel = await _context.VehicleModel.FindAsync(id);
+            var vehicleModel = await _vehicleModelRepository.GetVehicleModelAsync(id);
             if (vehicleModel == null)
             {
                 return NotFound();
             }
-            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Name", vehicleModel.VehicleMakeId);
+            
+            var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
+
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name", vehicleModel.VehicleMakeId);
             return View(vehicleModel);
         }
 
@@ -169,25 +172,18 @@ namespace Vehicles.MVC.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+
+                if (!await _vehicleModelRepository.VehicleModelExistsAsync(vehicleModel.Id))
                 {
-                    _context.Update(vehicleModel);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VehicleModelExists(vehicleModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Id", vehicleModel.VehicleMakeId);
+            
+            var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Id", vehicleModel.VehicleMakeId);
             return View(vehicleModel);
         }
 
@@ -229,6 +225,7 @@ namespace Vehicles.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // marked for deletion after all is in VehicleModelRepo
         private bool VehicleModelExists(int id)
         {
           return (_context.VehicleModel?.Any(e => e.Id == id)).GetValueOrDefault();

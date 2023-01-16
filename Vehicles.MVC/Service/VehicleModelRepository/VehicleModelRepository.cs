@@ -31,4 +31,15 @@ public class VehicleModelRepository : IVehicleModelRepository
         _context.Add(vehicleModel);
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateVehicleModelAsync(VehicleModel vehicleModel)
+    {
+        _context.Update(vehicleModel);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<bool> VehicleModelExistsAsync(int id)
+    {
+        return await _context.VehicleMake.AnyAsync(v => v.Id == id);
+    }
 }
