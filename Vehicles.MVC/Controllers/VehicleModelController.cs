@@ -110,9 +110,11 @@ namespace Vehicles.MVC.Controllers
         }
 
         // GET: VehicleModel/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Name");
+            var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
+
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name");
             return View();
         }
 
@@ -125,11 +127,14 @@ namespace Vehicles.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehicleModel);
-                await _context.SaveChangesAsync();
+                //_context.Add(vehicleModel);
+                await _vehicleModelRepository.AddVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Id", vehicleModel.VehicleMakeId);
+            
+            var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name", vehicleModel.VehicleMakeId);
+            
             return View(vehicleModel);
         }
 
@@ -146,7 +151,7 @@ namespace Vehicles.MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Id", vehicleModel.VehicleMakeId);
+            ViewData["VehicleMakeId"] = new SelectList(_context.VehicleMake, "Id", "Name", vehicleModel.VehicleMakeId);
             return View(vehicleModel);
         }
 

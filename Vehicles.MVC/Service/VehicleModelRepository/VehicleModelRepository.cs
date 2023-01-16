@@ -25,4 +25,10 @@ public class VehicleModelRepository : IVehicleModelRepository
             .Include(v => v.VehicleMake)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
+
+    public async Task AddVehicleModelAsync(VehicleModel vehicleModel)
+    {
+        _context.Add(vehicleModel);
+        await _context.SaveChangesAsync();
+    }
 }

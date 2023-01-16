@@ -6,4 +6,5 @@ public interface IVehicleModelRepository
 {
     Task<IQueryable<VehicleModel>> GetVehicleModelsAsync();
     Task<VehicleModel> GetVehicleModelAsync(int? id);
+    Task AddVehicleModelAsync(VehicleModel vehicleModel);
 }
