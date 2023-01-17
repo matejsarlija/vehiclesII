@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.Data;
 using Vehicles.MVC.Models;
 using Vehicles.MVC.Service;
