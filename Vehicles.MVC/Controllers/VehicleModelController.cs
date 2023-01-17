@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.Data;
 using Vehicles.MVC.Models;
 using Vehicles.MVC.Service;
@@ -74,10 +75,10 @@ namespace Vehicles.MVC.Controllers
             }
 
             IQueryable<VehicleModel> source = vehicleModels;
+            var vehicleModelsVm = _mapper.ProjectTo<VehicleModelViewModel>(source);
             int pageSize = 3;
-            var paginatedList = await
-                PaginatedList<VehicleModel>.CreateAsync(source, pageNumber ?? 1, pageSize);
-
+            var paginatedList = await PaginatedList<VehicleModelViewModel>.CreateAsync(vehicleModelsVm, pageNumber ?? 1, pageSize);
+            
 
             var vehicleModelVm = new VehicleModelIndexViewModel
             {
