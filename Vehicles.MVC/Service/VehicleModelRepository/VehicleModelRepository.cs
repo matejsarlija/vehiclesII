@@ -37,6 +37,19 @@ public class VehicleModelRepository : IVehicleModelRepository
         _context.Update(vehicleModel);
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteVehicleModelAsync(int? id)
+    {
+        var vehicleModel = await _context.VehicleModel
+            .Include(v => v.VehicleMake)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (vehicleModel != null)
+        {
+            _context.VehicleModel.Remove(vehicleModel);
+            await _context.SaveChangesAsync();
+        }
+    }
     
     public async Task<bool> VehicleModelExistsAsync(int id)
     {

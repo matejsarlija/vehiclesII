@@ -127,7 +127,6 @@ namespace Vehicles.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_context.Add(vehicleModel);
                 await _vehicleModelRepository.AddVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
@@ -190,14 +189,12 @@ namespace Vehicles.MVC.Controllers
         // GET: VehicleModel/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.VehicleModel == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var vehicleModel = await _context.VehicleModel
-                .Include(v => v.VehicleMake)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var vehicleModel = await _vehicleModelRepository.GetVehicleModelAsync(id);
             if (vehicleModel == null)
             {
                 return NotFound();
@@ -211,24 +208,8 @@ namespace Vehicles.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.VehicleModel == null)
-            {
-                return Problem("Entity set 'VehicleContext.VehicleModel'  is null.");
-            }
-            var vehicleModel = await _context.VehicleModel.FindAsync(id);
-            if (vehicleModel != null)
-            {
-                _context.VehicleModel.Remove(vehicleModel);
-            }
-            
-            await _context.SaveChangesAsync();
+            await _vehicleModelRepository.DeleteVehicleModelAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        // marked for deletion after all is in VehicleModelRepo
-        private bool VehicleModelExists(int id)
-        {
-          return (_context.VehicleModel?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
