@@ -34,7 +34,7 @@ public class VehicleModelRepository : IVehicleModelRepository
 
     public async Task UpdateVehicleModelAsync(VehicleModel vehicleModel)
     {
-        _context.Update(vehicleModel);
+        _context.VehicleModel.Update(vehicleModel);
         await _context.SaveChangesAsync();
     }
 

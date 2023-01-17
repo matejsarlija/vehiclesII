@@ -106,7 +106,9 @@ namespace Vehicles.MVC.Controllers
                 return NotFound();
             }
 
-            return View(vehicleModel);
+            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+
+            return View(vehicleModelVm);
         }
 
         // GET: VehicleModel/Create
@@ -133,8 +135,9 @@ namespace Vehicles.MVC.Controllers
             
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
             ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name", vehicleModel.VehicleMakeId);
-            
-            return View(vehicleModel);
+
+            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+            return View(vehicleModelVm);
         }
 
         // GET: VehicleModel/Edit/5
@@ -154,7 +157,8 @@ namespace Vehicles.MVC.Controllers
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
 
             ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
+            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+            return View(vehicleModelVm);
         }
 
         // POST: VehicleModel/Edit/5
@@ -168,22 +172,25 @@ namespace Vehicles.MVC.Controllers
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
 
-                if (!await _vehicleModelRepository.VehicleModelExistsAsync(vehicleModel.Id))
+                var vehicleModelToUpdate = await _vehicleModelRepository.GetVehicleModelAsync(id);
+                if (vehicleModelToUpdate == null)
                 {
                     return NotFound();
                 }
-
-                await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModel);
+                
+                await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModelToUpdate);
                 return RedirectToAction(nameof(Index));
             }
             
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
             ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Id", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
+            
+            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+            return View(vehicleModelVm);
         }
 
         // GET: VehicleModel/Delete/5
@@ -200,7 +207,8 @@ namespace Vehicles.MVC.Controllers
                 return NotFound();
             }
 
-            return View(vehicleModel);
+            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
+            return View(vehicleModelVm);
         }
 
         // POST: VehicleModel/Delete/5
