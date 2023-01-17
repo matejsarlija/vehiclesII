@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Data;
-using Vehicles.MVC.Models;
+using Vehicles.MVC.ViewModels;
+using Vehicles.Service.Data;
+using Vehicles.Service.Models;
 
 namespace Vehicles.MVC.Controllers;
 

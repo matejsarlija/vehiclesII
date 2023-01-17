@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Vehicles.MVC.Data;
-using Vehicles.MVC.Models;
-using Vehicles.MVC.Service;
+using Vehicles.MVC.ViewModels;
+using Vehicles.Service.Helpers;
+using Vehicles.Service.Models;
+using Vehicles.Service.Service.VehicleMakeRepository;
 
 namespace Vehicles.MVC.Controllers
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Vehicles.MVC;
+namespace Vehicles.Service.Helpers;
 
 public class PaginatedList<T> : List<T>
 {

@@ -1,6 +1,6 @@
-using Vehicles.MVC.Models;
+using Vehicles.Service.Models;
 
-namespace Vehicles.MVC.Service.VehicleModelRepository;
+namespace Vehicles.Service.Service.VehicleModelRepository;
 
 public interface IVehicleModelRepository
 {

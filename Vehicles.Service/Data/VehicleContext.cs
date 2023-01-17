@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Models;
+using Vehicles.Service.Models;
 
-namespace Vehicles.MVC.Data
+namespace Vehicles.Service.Data
 {
     public class VehicleContext : DbContext
     {

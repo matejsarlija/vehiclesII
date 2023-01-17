@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Data;
-using Vehicles.MVC.Models;
+using Vehicles.Service.Data;
+using Vehicles.Service.Helpers;
+using Vehicles.Service.Models;
 
-namespace Vehicles.MVC.Service;
+namespace Vehicles.Service.Service.VehicleMakeRepository;
 
 public class VehicleMakeRepository : IVehicleMakeRepository
 {

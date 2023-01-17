@@ -1,4 +1,6 @@
-namespace Vehicles.MVC.Models;
+using Vehicles.Service.Models;
+
+namespace Vehicles.MVC.ViewModels;
 
 public class VehicleMakeViewModel
 {

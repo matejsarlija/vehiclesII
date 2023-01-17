@@ -1,4 +1,4 @@
-namespace Vehicles.MVC.Models;
+namespace Vehicles.MVC.ViewModels;
 
 public class SumViewModel
 {

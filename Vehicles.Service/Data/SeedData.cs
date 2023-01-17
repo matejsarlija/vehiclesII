@@ -1,8 +1,8 @@
-using Azure.Core;
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Vehicles.Service.Models;
 
-namespace Vehicles.MVC.Data;
+namespace Vehicles.Service.Data;
 
 public static class SeedData
 {

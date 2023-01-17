@@ -1,6 +1,8 @@
 using AutoMapper;
+using Vehicles.MVC.ViewModels;
+using Vehicles.Service.Models;
 
-namespace Vehicles.MVC.Models;
+namespace Vehicles.MVC.Profiles;
 
 public class VehicleMakeProfile : Profile
 {

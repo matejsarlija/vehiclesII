@@ -1,4 +1,4 @@
-namespace Vehicles.MVC.Models;
+namespace Vehicles.Service.Models;
 
 public class VehicleMake
 {

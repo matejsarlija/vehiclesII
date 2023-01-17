@@ -2,10 +2,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Data;
-using Vehicles.MVC.Models;
-using Vehicles.MVC.Service;
-using Vehicles.MVC.Service.VehicleModelRepository;
+using Vehicles.MVC.ViewModels;
+using Vehicles.Service.Helpers;
+using Vehicles.Service.Models;
+using Vehicles.Service.Service.VehicleMakeRepository;
+using Vehicles.Service.Service.VehicleModelRepository;
 
 namespace Vehicles.MVC.Controllers
 {

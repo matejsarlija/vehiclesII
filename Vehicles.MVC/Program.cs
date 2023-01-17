@@ -2,14 +2,16 @@ using System.Web;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Vehicles.MVC.Data;
-using Vehicles.MVC.Models;
-using Vehicles.MVC.Service;
-using Vehicles.MVC.Service.VehicleModelRepository;
+using Vehicles.MVC.Profiles;
+using Vehicles.Service.Data;
+using Vehicles.Service.Models;
+using Vehicles.Service.Service.VehicleMakeRepository;
+using Vehicles.Service.Service.VehicleModelRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VehicleContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("VehicleContext") ?? throw new InvalidOperationException("Connection string 'VehicleContext' not found.")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("VehicleContext") ?? throw new InvalidOperationException("Connection string 'VehicleContext' not found."), x =>
+        x.MigrationsAssembly("Vehicles.Service")));
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAutoMapper(typeof(VehicleMakeProfile));
