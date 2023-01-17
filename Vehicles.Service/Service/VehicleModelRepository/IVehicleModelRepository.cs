@@ -9,5 +9,4 @@ public interface IVehicleModelRepository
     Task AddVehicleModelAsync(VehicleModel vehicleModel);
     Task UpdateVehicleModelAsync(VehicleModel vehicleModel);
     Task DeleteVehicleModelAsync(int? id);
-    Task<bool> VehicleModelExistsAsync(int id);
 }

@@ -177,13 +177,7 @@ namespace Vehicles.MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                var vehicleModelToUpdate = await _vehicleModelRepository.GetVehicleModelAsync(id);
-                if (vehicleModelToUpdate == null)
-                {
-                    return NotFound();
-                }
-                
-                await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModelToUpdate);
+                await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
             
