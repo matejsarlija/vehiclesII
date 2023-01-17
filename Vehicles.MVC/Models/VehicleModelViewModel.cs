@@ -1,11 +1,13 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace Vehicles.MVC.Models;
 
 public class VehicleModelViewModel
 {
-    public PaginatedList<VehicleModel> VehicleModels { get; set; }
-    public SelectList VehicleMakes { get; set; }
-    public string VehicleModelMake { get; set; }
-    public string SearchString { get; set; }
+        public int Id { get; set; }
+        public int VehicleMakeId { get; set; }
+        public string Name { get; set; }
+        public string Abrv { get; set; }
+
+        public VehicleMake VehicleMake { get; set; }
+
+    
 }

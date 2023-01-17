@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vehicles.MVC.Data;
@@ -9,14 +10,14 @@ namespace Vehicles.MVC.Controllers
 {
     public class VehicleModelController : Controller
     {
-        private readonly VehicleContext _context;
+        private readonly IMapper _mapper;
         private readonly IVehicleMakeRepository _vehicleMakeRepository;
         private readonly IVehicleModelRepository _vehicleModelRepository;
 
 
-        public VehicleModelController(IVehicleModelRepository vehicleModelRepository, IVehicleMakeRepository vehicleMakeRepository, VehicleContext context)
+        public VehicleModelController(IVehicleModelRepository vehicleModelRepository, IVehicleMakeRepository vehicleMakeRepository, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
             _vehicleMakeRepository = vehicleMakeRepository;
             _vehicleModelRepository = vehicleModelRepository;
         }
@@ -43,7 +44,6 @@ namespace Vehicles.MVC.Controllers
             // section for filter by make
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
 
-            //var vehicleModels = from v in _context.VehicleModel.Include(v => v.VehicleMake) select v;
             var vehicleModels = await _vehicleModelRepository.GetVehicleModelsAsync();
 
             if (!string.IsNullOrEmpty(vehicleModelMake))
@@ -79,7 +79,7 @@ namespace Vehicles.MVC.Controllers
                 PaginatedList<VehicleModel>.CreateAsync(source, pageNumber ?? 1, pageSize);
 
 
-            var vehicleModelVm = new VehicleModelViewModel
+            var vehicleModelVm = new VehicleModelIndexViewModel
             {
                 VehicleMakes = new SelectList(vehicleMakeQuery.Select(vM => vM.Name)),
                 VehicleModels = paginatedList,
@@ -139,7 +139,7 @@ namespace Vehicles.MVC.Controllers
         // GET: VehicleModel/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.VehicleModel == null)
+            if (id == null)
             {
                 return NotFound();
             }
