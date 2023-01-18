@@ -32,5 +32,5 @@ and do this from the Vehicles.MVC folder:
 
 `dotnet ef database update --project Vehicles.Service`
 
-Parts of CRUD may work funny for you under Linux unless you disable <nullable> in the project settings due to a .NET bug,
+Parts of CRUD may work funny for you under Linux unless you disable **nullable** in the project settings due to a .NET bug,
 should be fine on Windows.
