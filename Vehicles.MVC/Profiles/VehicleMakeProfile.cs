@@ -12,5 +12,7 @@ public class VehicleMakeProfile : Profile
         CreateMap<VehicleMake, VehicleMakeViewModel>();
         CreateMap<VehicleMake, VehicleMakeViewModel>()
             .ForMember(dest => dest.VehicleModels, opt => opt.MapFrom(src => src.VehicleModels));
+        CreateMap<VehicleMakeViewModel, VehicleMake>();
+
     }
 }

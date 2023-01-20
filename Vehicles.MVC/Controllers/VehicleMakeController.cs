@@ -82,15 +82,15 @@ namespace Vehicles.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Abrv")] VehicleMake vehicleMake)
+        public async Task<IActionResult> Create([Bind("Id,Name,Abrv")] VehicleMakeViewModel vehicleMakeVm)
         {
             if (ModelState.IsValid)
             {
+                var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeVm);
                 await _vehicleMakeRepository.CreateVehicleMakeAsync(vehicleMake);
                 return RedirectToAction(nameof(Index));
             }
 
-            var vehicleMakeVm = _mapper.Map<VehicleMakeViewModel>(vehicleMake);
             return View(vehicleMakeVm);
         }
 
