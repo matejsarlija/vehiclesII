@@ -1,5 +1,6 @@
 using System.Web;
-using Microsoft.Extensions.DependencyInjection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.Profiles;
@@ -13,10 +14,22 @@ builder.Services.AddDbContext<VehicleContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("VehicleContext") ?? throw new InvalidOperationException("Connection string 'VehicleContext' not found."), x =>
         x.MigrationsAssembly("Vehicles.Service")));
 
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(depBuilder =>
+{
+    depBuilder.RegisterType<VehicleMakeRepository>().As<IVehicleMakeRepository>();
+    depBuilder.RegisterType<VehicleModelRepository>().As<IVehicleModelRepository>();
+});
+
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAutoMapper(typeof(VehicleMakeProfile));
-builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
-builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
+
+// Replaced with Autofac 
+//builder.Services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
+//builder.Services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
