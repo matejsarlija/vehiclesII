@@ -166,24 +166,24 @@ namespace Vehicles.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VehicleMakeId,Name,Abrv")] VehicleModel vehicleModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,VehicleMakeId,Name,Abrv")] VehicleModelViewModel vehicleModelVm)
         {
-            if (id != vehicleModel.Id)
+            if (id != vehicleModelVm.Id)
             {
                 return NotFound();
             }
             
             if (ModelState.IsValid)
             {
+                var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelVm);
 
                 await _vehicleModelRepository.UpdateVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
             
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
-            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Id", vehicleModel.VehicleMakeId);
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Id", vehicleModelVm.VehicleMakeId);
             
-            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
             return View(vehicleModelVm);
         }
 
