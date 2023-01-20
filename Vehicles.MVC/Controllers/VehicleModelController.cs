@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Vehicles.MVC.ViewModels;
 using Vehicles.Service.Helpers;
 using Vehicles.Service.Models;
@@ -126,18 +125,18 @@ namespace Vehicles.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VehicleMakeId,Name,Abrv")] VehicleModel vehicleModel)
+        public async Task<IActionResult> Create([Bind("Id,VehicleMakeId,Name,Abrv")] VehicleModelViewModel vehicleModelVm)
         {
             if (ModelState.IsValid)
             {
+                var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelVm);
                 await _vehicleModelRepository.AddVehicleModelAsync(vehicleModel);
                 return RedirectToAction(nameof(Index));
             }
             
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
-            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name", vehicleModel.VehicleMakeId);
+            ViewData["VehicleMakeId"] = new SelectList(vehicleMakeQuery, "Id", "Name");
 
-            var vehicleModelVm = _mapper.Map<VehicleModelViewModel>(vehicleModel);
             return View(vehicleModelVm);
         }
 
