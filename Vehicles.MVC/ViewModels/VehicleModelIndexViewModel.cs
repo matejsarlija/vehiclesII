@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vehicles.Service.Helpers;
-using Vehicles.Service.Models;
 
 namespace Vehicles.MVC.ViewModels;
 
