@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Vehicles.MVC.Helpers;
 using Vehicles.MVC.ViewModels;
 using Vehicles.Service.Helpers;
 using Vehicles.Service.Models;
@@ -25,29 +26,29 @@ namespace Vehicles.MVC.Controllers
         }
 
         // GET: VehicleMake
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        public async Task<IActionResult> Index(VehicleMakeQuery vehicleMakeQuery)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["AbrvSortParm"] = sortOrder == "abrv" ? "abrv_desc" : "abrv";
+            ViewData["CurrentSort"] = vehicleMakeQuery.SortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(vehicleMakeQuery.SortOrder) ? "name_desc" : "";
+            ViewData["AbrvSortParm"] = vehicleMakeQuery.SortOrder == "abrv" ? "abrv_desc" : "abrv";
 
-            if (searchString != null)
+            if (vehicleMakeQuery.SearchString != null)
             {
-                pageNumber = 1;
+                vehicleMakeQuery.PageNumber = 1;
             }
             else
             {
-                searchString = currentFilter;
+                vehicleMakeQuery.SearchString = vehicleMakeQuery.CurrentFilter;
             }
 
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentFilter"] = vehicleMakeQuery.SearchString;
 
             var vehicleMakes =
-                await _vehicleMakeRepository.GetVehicleMakesAsync(sortOrder, currentFilter, searchString, pageNumber);
+                await _vehicleMakeRepository.GetVehicleMakesAsync(vehicleMakeQuery.SortOrder, vehicleMakeQuery.CurrentFilter, vehicleMakeQuery.SearchString, vehicleMakeQuery.PageNumber);
 
             var vehicleMakesVm = _mapper.Map<List<VehicleMakeViewModel>>(vehicleMakes);
 
-            var paginatedVehicleMakesVm = new PaginatedList<VehicleMakeViewModel>(vehicleMakesVm, vehicleMakes.TotalCount, pageNumber ?? 1, 3);
+            var paginatedVehicleMakesVm = new PaginatedList<VehicleMakeViewModel>(vehicleMakesVm, vehicleMakes.TotalCount, vehicleMakeQuery.PageNumber ?? 1, 3);
 
             return View(paginatedVehicleMakesVm);
         }
