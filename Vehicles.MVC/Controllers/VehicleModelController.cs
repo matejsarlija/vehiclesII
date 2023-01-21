@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Vehicles.MVC.Helpers;
 using Vehicles.MVC.ViewModels;
 using Vehicles.Service.Helpers;
 using Vehicles.Service.Models;
@@ -24,35 +25,36 @@ namespace Vehicles.MVC.Controllers
         }
 
         // GET: VehicleModel
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string vehicleModelMake, int? pageNumber)
+        //public async Task<IActionResult> Index(string sortOrder, string currentFilter, string vehicleModelMake, int? pageNumber)
+        public async Task<IActionResult> Index(VehicleModelQuery vehicleModelQuery)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["AbrvSortParm"] = sortOrder == "abrv" ? "abrv_desc" : "abrv";
-            ViewData["MakeSortParm"] = sortOrder == "make" ? "make_desc" : "make";
+            ViewData["CurrentSort"] = vehicleModelQuery.SortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(vehicleModelQuery.SortOrder) ? "name_desc" : "";
+            ViewData["AbrvSortParm"] = vehicleModelQuery.SortOrder == "abrv" ? "abrv_desc" : "abrv";
+            ViewData["MakeSortParm"] = vehicleModelQuery.SortOrder == "make" ? "make_desc" : "make";
 
-            if (vehicleModelMake != null)
+            if (vehicleModelQuery.VehicleModelMake != null)
             {
-                pageNumber = 1;
+                vehicleModelQuery.PageNumber = 1;
             }
             else
             {
-                vehicleModelMake = currentFilter;
+                vehicleModelQuery.VehicleModelMake = vehicleModelQuery.CurrentFilter;
             }
 
-            ViewData["CurrentFilter"] = vehicleModelMake; 
+            ViewData["CurrentFilter"] = vehicleModelQuery.VehicleModelMake; 
             
             // section for filter by make
             var vehicleMakeQuery = await _vehicleMakeRepository.GetVehicleMakesForModelsAsync();
 
             var vehicleModels = await _vehicleModelRepository.GetVehicleModelsAsync();
 
-            if (!string.IsNullOrEmpty(vehicleModelMake))
+            if (!string.IsNullOrEmpty(vehicleModelQuery.VehicleModelMake))
             {
-                vehicleModels = vehicleModels.Where(v => v.VehicleMake.Name == vehicleModelMake);
+                vehicleModels = vehicleModels.Where(v => v.VehicleMake.Name == vehicleModelQuery.VehicleModelMake);
             }
 
-            switch (sortOrder)
+            switch (vehicleModelQuery.SortOrder)
             {
                 case "name_desc":
                     vehicleModels = vehicleModels.OrderByDescending(v => v.Name);
@@ -77,15 +79,15 @@ namespace Vehicles.MVC.Controllers
             IQueryable<VehicleModel> source = vehicleModels;
             var vehicleModelsVm = _mapper.ProjectTo<VehicleModelViewModel>(source);
             int pageSize = 3;
-            var paginatedList = await PaginatedList<VehicleModelViewModel>.CreateAsync(vehicleModelsVm, pageNumber ?? 1, pageSize);
+            var paginatedList = await PaginatedList<VehicleModelViewModel>.CreateAsync(vehicleModelsVm, vehicleModelQuery.PageNumber ?? 1, pageSize);
             
 
             var vehicleModelVm = new VehicleModelIndexViewModel
             {
                 VehicleMakes = new SelectList(vehicleMakeQuery.Select(vM => vM.Name)),
                 VehicleModels = paginatedList,
-                VehicleModelMake = vehicleModelMake,
-                SearchString = currentFilter
+                VehicleModelMake = vehicleModelQuery.VehicleModelMake,
+                SearchString = vehicleModelQuery.CurrentFilter
             };
             
             return View(vehicleModelVm);
