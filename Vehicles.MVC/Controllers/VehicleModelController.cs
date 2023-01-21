@@ -32,7 +32,7 @@ namespace Vehicles.MVC.Controllers
             ViewData["AbrvSortParm"] = vehicleModelQuery.SortOrder == "abrv" ? "abrv_desc" : "abrv";
             ViewData["MakeSortParm"] = vehicleModelQuery.SortOrder == "make" ? "make_desc" : "make";
 
-            if (vehicleModelQuery.VehicleModelMake != null)
+            if (!string.IsNullOrEmpty(vehicleModelQuery.VehicleModelMake))
             {
                 vehicleModelQuery.PageNumber = 1;
             }
