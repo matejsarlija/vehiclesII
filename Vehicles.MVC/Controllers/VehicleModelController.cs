@@ -25,7 +25,6 @@ namespace Vehicles.MVC.Controllers
         }
 
         // GET: VehicleModel
-        //public async Task<IActionResult> Index(string sortOrder, string currentFilter, string vehicleModelMake, int? pageNumber)
         public async Task<IActionResult> Index(VehicleModelQuery vehicleModelQuery)
         {
             ViewData["CurrentSort"] = vehicleModelQuery.SortOrder;
