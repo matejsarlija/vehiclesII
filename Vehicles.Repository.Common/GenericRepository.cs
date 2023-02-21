@@ -9,9 +9,10 @@ public class GenericRepository<T> : IRepository<T> where T : class
     private readonly DbSet<T> _dbSet;
     private readonly VehicleContext _context;
 
-    public GenericRepository(DbContext context)
+    public GenericRepository(VehicleContext context)
     {
         _dbSet = context.Set<T>();
+        _context = context;
     }
 
     public async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
