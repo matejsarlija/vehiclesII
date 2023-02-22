@@ -15,7 +15,9 @@ public class GenericRepository<T> : IRepository<T> where T : class
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+    public async Task<IQueryable<T>> Get(Expression<Func<T, bool>> filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        string includeProperties = "")
     {
         IQueryable<T> query = _dbSet;
 
@@ -31,15 +33,14 @@ public class GenericRepository<T> : IRepository<T> where T : class
 
         if (orderBy != null)
         {
-            return await orderBy(query).ToListAsync();
+             query = orderBy(query);
         }
-        else
-        {
-            return await query.ToListAsync();
-        }
+       
+        return await Task.FromResult(query);
+        
     }
 
-    public async Task<T> GetById(object id)
+    public async Task<T> GetByIdAsync(object id)
     {
         return await _dbSet.FindAsync(id);
     }
