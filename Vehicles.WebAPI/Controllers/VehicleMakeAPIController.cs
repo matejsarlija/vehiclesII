@@ -29,10 +29,10 @@ public class VehicleMakeApiController : ControllerBase
     public async Task<ActionResult<PaginatedList<VehicleMakeDto>>> GetVehicleMakes([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         var vehicleMakes = _unitOfWork.VehicleMakeRepository.Get();
-        var paginatedList = await PaginatedList<VehicleMake>.CreateAsync(vehicleMakes.Result, pageNumber, pageSize);
+        //var paginatedList = await PaginatedList<VehicleMake>.CreateAsync(vehicleMakes.Result, pageNumber, pageSize);
 
-        var mappedList = _mapper.Map<IEnumerable<VehicleMakeDto>>(paginatedList);
-        return Ok(new PaginatedList<VehicleMakeDto>(mappedList.ToList(), paginatedList.TotalCount, paginatedList.PageIndex, paginatedList.TotalPages));
+        var mappedList = _mapper.Map<IQueryable<VehicleMakeDto>>(vehicleMakes);
+        return Ok(await PaginatedList<VehicleMakeDto>.CreateAsync(mappedList, pageNumber, pageSize));
     }
 
     // GET: api/VehicleMakeApi/5
