@@ -37,7 +37,7 @@ public class VehicleMakeApiController : ControllerBase
 
     // GET: api/VehicleMakeApi/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<VehicleMake>> GetVehicleMake(int id)
+    public async Task<ActionResult<VehicleMakeDto>> GetVehicleMake(int id)
     {
         var vehicleMake = await _unitOfWork.VehicleMakeRepository.GetByIdAsync(id);
 
@@ -46,17 +46,21 @@ public class VehicleMakeApiController : ControllerBase
             return NotFound();
         }
 
-        return vehicleMake;
+        var mapped = _mapper.Map<VehicleMakeDto>(vehicleMake);
+
+        return mapped;
     }
 
     // PUT: api/VehicleMakeApi/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutVehicleMake(int id, VehicleMake vehicleMake)
+    public async Task<IActionResult> PutVehicleMake(int id, VehicleMakeDto vehicleMakeDto)
     {
-        if (id != vehicleMake.Id)
+        if (id != vehicleMakeDto.Id)
         {
             return BadRequest();
         }
+
+        var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
 
         _unitOfWork.VehicleMakeRepository.Update(vehicleMake);
 
@@ -81,12 +85,14 @@ public class VehicleMakeApiController : ControllerBase
 
     // POST: api/VehicleMakeApi
     [HttpPost]
-    public async Task<ActionResult<VehicleMake>> PostVehicleMake(VehicleMake vehicleMake)
+    public async Task<ActionResult<VehicleMakeDto>> PostVehicleMake(VehicleMake vehicleMakeDto)
     {
+        var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
+
         _unitOfWork.VehicleMakeRepository.InsertAsync(vehicleMake);
         await _unitOfWork.SaveChangesAsync();
 
-        return CreatedAtAction("GetVehicleMake", new { id = vehicleMake.Id }, vehicleMake);
+        return CreatedAtAction("GetVehicleMake", new { id = vehicleMakeDto.Id }, vehicleMakeDto);
     }
 
     // DELETE: api/VehicleMakeApi/5
