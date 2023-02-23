@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Vehicles.Model.Common.Profiles;
 using Vehicles.Repository;
+using Vehicles.Repository.Common;
 using Vehicles.Service.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(depBuilder =>
 {
     depBuilder.RegisterType<VehicleUnitOfWork>().As<IVehicleUnitOfWork>();
-    //depBuilder.RegisterType<VehicleModelRepository>().As<IVehicleModelRepository>();
 });
 
 

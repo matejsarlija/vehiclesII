@@ -47,8 +47,6 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-
-// delete later on
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
