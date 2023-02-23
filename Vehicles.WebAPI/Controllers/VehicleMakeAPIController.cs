@@ -1,5 +1,8 @@
+using System.Collections;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vehicles.Model.DTO;
 using Vehicles.Repository;
 using Vehicles.Service.Helpers;
 using Vehicles.Service.Models;
@@ -12,20 +15,24 @@ namespace Vehicles.WebAPI.Controllers;
 public class VehicleMakeApiController : ControllerBase
 {
     private readonly IVehicleUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public VehicleMakeApiController(IVehicleUnitOfWork unitOfWork)
+
+    public VehicleMakeApiController(IVehicleUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     // GET: api/VehicleMakeApi
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<VehicleMake>>> GetVehicleMakes([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<ActionResult<PaginatedList<VehicleMakeDto>>> GetVehicleMakes([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         var vehicleMakes = _unitOfWork.VehicleMakeRepository.Get();
         var paginatedList = await PaginatedList<VehicleMake>.CreateAsync(vehicleMakes.Result, pageNumber, pageSize);
 
-        return paginatedList;
+        var mappedList = _mapper.Map<IEnumerable<VehicleMakeDto>>(paginatedList);
+        return Ok(new PaginatedList<VehicleMakeDto>(mappedList.ToList(), paginatedList.TotalCount, paginatedList.PageIndex, paginatedList.TotalPages));
     }
 
     // GET: api/VehicleMakeApi/5
