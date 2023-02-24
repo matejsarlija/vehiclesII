@@ -32,7 +32,7 @@ public class VehicleMakeApiController : ControllerBase
         //var paginatedList = await PaginatedList<VehicleMake>.CreateAsync(vehicleMakes.Result, pageNumber, pageSize);
 
         var mappedList = _mapper.Map<IQueryable<VehicleMakeDto>>(vehicleMakes);
-        return Ok(await PaginatedList<VehicleMakeDto>.CreateAsync(mappedList, pageNumber, pageSize));
+        return await PaginatedList<VehicleMakeDto>.CreateAsync(mappedList, pageNumber, pageSize);
     }
 
     // GET: api/VehicleMakeApi/5

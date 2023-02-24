@@ -1,6 +1,7 @@
 using System.Configuration;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Vehicles.Model.Common.Profiles;
 using Vehicles.Repository;
@@ -43,7 +44,12 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<VehicleContext>();
-    //context.Database.Migrate();
+    context.Database.EnsureCreated();
+    
+    if (context.Database.GetDbConnection() is SqliteConnection conn)
+    {
+        SqliteConnection.ClearPool(conn);
+    }
 }
 
 app.UseHttpsRedirection();
