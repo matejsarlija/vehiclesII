@@ -12,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<VehicleContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("VehicleContext")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("VehicleContext") ?? throw new InvalidOperationException("Connection string 'VehicleContext' not found."), x =>
+        x.MigrationsAssembly("Vehicles.Service")));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -48,10 +49,10 @@ using (var scope = app.Services.CreateScope())
 
     context.Database.EnsureCreated();
     
-    if (context.Database.GetDbConnection() is SqliteConnection conn)
-    {
-        SqliteConnection.ClearPool(conn);
-    }
+    // if (context.Database.GetDbConnection() is SqliteConnection conn)
+    // {
+    //     SqliteConnection.ClearPool(conn);
+    // }
 }
 
 app.UseHttpsRedirection();
