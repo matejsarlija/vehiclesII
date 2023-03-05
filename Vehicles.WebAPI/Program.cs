@@ -44,6 +44,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<VehicleContext>();
+    SeedData.Initialize(services);
+
     context.Database.EnsureCreated();
     
     if (context.Database.GetDbConnection() is SqliteConnection conn)
