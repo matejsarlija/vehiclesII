@@ -23,7 +23,7 @@
     <ProjectReference Include="..\Vehicles.Model.Common\Vehicles.Model.Common.csproj" />
     <ProjectReference Include="..\Vehicles.Model\Vehicles.Model.csproj" />
     <ProjectReference Include="..\Vehicles.Repository\Vehicles.Repository.csproj" />
-    <ProjectReference Include="..\Vehicles.Service.Common\Vehicles.Service.Common.csproj" />
+    <ProjectReference Include="..\Vehicles.Service\Vehicles.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
