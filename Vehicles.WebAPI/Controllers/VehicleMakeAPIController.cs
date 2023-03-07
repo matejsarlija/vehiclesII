@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehicles.Model.DTO;
 using Vehicles.Repository;
+using Vehicles.Repository.Common;
 using Vehicles.Service.Helpers;
 using Vehicles.Service.Models;
 

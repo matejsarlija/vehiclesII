@@ -1,7 +1,6 @@
-using Vehicles.Repository.Common;
 using Vehicles.Service.Models;
 
-namespace Vehicles.Repository;
+namespace Vehicles.Repository.Common;
 
 public interface IVehicleUnitOfWork
 {

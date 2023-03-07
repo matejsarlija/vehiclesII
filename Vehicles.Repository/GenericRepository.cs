@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Vehicles.Repository.Common;
 using Vehicles.Service.Data;
 
-namespace Vehicles.Repository.Common;
+namespace Vehicles.Repository;
 
 public class GenericRepository<T> : IRepository<T> where T : class
 {
