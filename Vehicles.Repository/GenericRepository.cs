@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Vehicles.DAL.Data;
 using Vehicles.Repository.Common;
-using Vehicles.Service.Data;
 
 namespace Vehicles.Repository;
 

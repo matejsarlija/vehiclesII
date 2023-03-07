@@ -1,6 +1,6 @@
 using AutoMapper;
+using Vehicles.DAL.Models;
 using Vehicles.Model.DTO;
-using Vehicles.Service.Models;
 
 namespace Vehicles.Model.Common.Profiles;
 

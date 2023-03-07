@@ -1,12 +1,10 @@
-using System.Configuration;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Vehicles.DAL.Data;
 using Vehicles.Model.Common.Profiles;
 using Vehicles.Repository;
 using Vehicles.Repository.Common;
-using Vehicles.Service.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

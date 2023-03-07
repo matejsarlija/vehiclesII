@@ -1,6 +1,6 @@
+using Vehicles.DAL.Data;
+using Vehicles.DAL.Models;
 using Vehicles.Repository.Common;
-using Vehicles.Service.Data;
-using Vehicles.Service.Models;
 
 namespace Vehicles.Repository;
 

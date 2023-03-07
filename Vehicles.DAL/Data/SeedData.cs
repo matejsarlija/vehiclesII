@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Vehicles.Service.Models;
+using Vehicles.DAL.Models;
 
-namespace Vehicles.Service.Data;
+namespace Vehicles.DAL.Data;
 
 public static class SeedData
 {

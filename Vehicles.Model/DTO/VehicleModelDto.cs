@@ -1,4 +1,4 @@
-using Vehicles.Service.Models;
+using Vehicles.DAL.Models;
 
 namespace Vehicles.Model.DTO;
 

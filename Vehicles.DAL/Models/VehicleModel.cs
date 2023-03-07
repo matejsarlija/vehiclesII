@@ -1,4 +1,4 @@
-namespace Vehicles.Service.Models;
+namespace Vehicles.DAL.Models;
 
 public class VehicleModel
 {
