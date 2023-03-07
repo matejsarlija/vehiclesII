@@ -13,7 +13,7 @@ builder.Services.AddDbContext<VehicleContext>(options =>
     options.UseSqlite(
         builder.Configuration.GetConnectionString("VehicleContext") ??
         throw new InvalidOperationException("Connection string 'VehicleContext' not found."), x =>
-            x.MigrationsAssembly("Vehicles.Service")));
+            x.MigrationsAssembly("Vehicles.DAL")));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 

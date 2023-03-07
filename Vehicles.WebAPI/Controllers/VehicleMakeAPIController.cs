@@ -77,7 +77,7 @@ public class VehicleMakeApiController : ControllerBase
     {
         var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
 
-        _unitOfWork.VehicleMakeRepository.InsertAsync(vehicleMake);
+        await _unitOfWork.VehicleMakeRepository.InsertAsync(vehicleMake);
         await _unitOfWork.SaveChangesAsync();
 
         return CreatedAtAction("GetVehicleMake", new {id = vehicleMakeDto.Id}, vehicleMakeDto);
