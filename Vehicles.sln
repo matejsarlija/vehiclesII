@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicles.Model", "Vehicles.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicles.Model.Common", "Vehicles.Model.Common\Vehicles.Model.Common.csproj", "{6728F7AB-33A0-439B-B64E-C3D74D518E69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicles.DAL", "Vehicles.DAL\Vehicles.DAL.csproj", "{03D4D761-E7CE-47EB-9906-CDCAB0AB6DC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{6728F7AB-33A0-439B-B64E-C3D74D518E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6728F7AB-33A0-439B-B64E-C3D74D518E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6728F7AB-33A0-439B-B64E-C3D74D518E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D4D761-E7CE-47EB-9906-CDCAB0AB6DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D4D761-E7CE-47EB-9906-CDCAB0AB6DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D4D761-E7CE-47EB-9906-CDCAB0AB6DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D4D761-E7CE-47EB-9906-CDCAB0AB6DC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
