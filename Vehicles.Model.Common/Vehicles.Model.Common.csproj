@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="AutoMapper">
-        <HintPath>..\..\..\.nuget\packages\automapper\10.1.1\lib\netstandard2.0\AutoMapper.dll</HintPath>
-      </Reference>
+        <Reference Include="AutoMapper">
+            <HintPath>..\..\..\.nuget\packages\automapper\10.1.1\lib\netstandard2.0\AutoMapper.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Vehicles.Model\Vehicles.Model.csproj" />
+        <ProjectReference Include="..\Vehicles.Model\Vehicles.Model.csproj"/>
     </ItemGroup>
 
 </Project>

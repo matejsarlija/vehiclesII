@@ -15,6 +15,5 @@ public class VehiclesApiProfile : Profile
 
         CreateMap<VehicleModel, VehicleModelDto>();
         CreateMap<VehicleModelDto, VehicleModel>();
-
     }
 }

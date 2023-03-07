@@ -7,8 +7,8 @@ namespace Vehicles.Repository;
 
 public class GenericRepository<T> : IRepository<T> where T : class
 {
-    private readonly DbSet<T> _dbSet;
     private readonly VehicleContext _context;
+    private readonly DbSet<T> _dbSet;
 
     public GenericRepository(VehicleContext context)
     {
@@ -22,23 +22,14 @@ public class GenericRepository<T> : IRepository<T> where T : class
     {
         IQueryable<T> query = _dbSet;
 
-        if (filter != null)
-        {
-            query = query.Where(filter);
-        }
+        if (filter != null) query = query.Where(filter);
 
-        foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-        {
+        foreach (var includeProperty in includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries))
             query = query.Include(includeProperty);
-        }
 
-        if (orderBy != null)
-        {
-             query = orderBy(query);
-        }
-       
+        if (orderBy != null) query = orderBy(query);
+
         return await Task.FromResult(query);
-        
     }
 
     public async Task<T> GetByIdAsync(object id)
@@ -53,16 +44,13 @@ public class GenericRepository<T> : IRepository<T> where T : class
 
     public async Task DeleteAsync(object id)
     {
-        T entityToDelete = _dbSet.Find(id);
+        var entityToDelete = _dbSet.Find(id);
         Delete(entityToDelete);
     }
 
     public void Delete(T entity)
     {
-        if (_context.Entry(entity).State == EntityState.Detached)
-        {
-            _dbSet.Attach(entity);
-        }
+        if (_context.Entry(entity).State == EntityState.Detached) _dbSet.Attach(entity);
         _dbSet.Remove(entity);
     }
 

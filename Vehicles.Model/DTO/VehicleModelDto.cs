@@ -10,5 +10,4 @@ public class VehicleModelDto
     public string Abrv { get; set; }
 
     public VehicleMake VehicleMake { get; set; }
-
 }

@@ -20,10 +20,7 @@ public class VehicleUnitOfWork : IVehicleUnitOfWork
     {
         get
         {
-            if (_vehicleMakeRepository == null)
-            {
-                _vehicleMakeRepository = new GenericRepository<VehicleMake>(_context);
-            }
+            if (_vehicleMakeRepository == null) _vehicleMakeRepository = new GenericRepository<VehicleMake>(_context);
 
             return _vehicleMakeRepository;
         }
@@ -34,14 +31,12 @@ public class VehicleUnitOfWork : IVehicleUnitOfWork
         get
         {
             if (_vehicleModelRepository == null)
-            {
                 _vehicleModelRepository = new GenericRepository<VehicleModel>(_context);
-            }
 
             return _vehicleModelRepository;
-            
         }
     }
+
     public async Task<int> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync();

@@ -9,6 +9,4 @@ public class VehicleMakeDto
     public string Abrv { get; set; }
 
     public IEnumerable<VehicleModel> VehicleModels { get; set; }
-
-
 }
